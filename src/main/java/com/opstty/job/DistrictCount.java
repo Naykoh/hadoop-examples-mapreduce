@@ -1,7 +1,7 @@
 package com.opstty.job;
 
-import com.opstty.mapper.WordCountMapper;
-import com.opstty.reducer.WordCountReducer;
+import com.opstty.mapper.DistrictCountMapper;
+import com.opstty.reducer.DistrictCountReducer;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -11,7 +11,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
-public class WordCount {
+public class DistrictCount {
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
         String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
@@ -19,11 +19,11 @@ public class WordCount {
             System.err.println("Usage: wordcount <in> [<in>...] <out>");
             System.exit(2);
         }
-        Job job = Job.getInstance(conf, "wordcount");
-        job.setJarByClass(WordCount.class);
-        job.setMapperClass(WordCountMapper.class);
-        job.setCombinerClass(WordCountReducer.class);
-        job.setReducerClass(WordCountReducer.class);
+        Job job = Job.getInstance(conf, "districtcount");
+        job.setJarByClass(DistrictCount.class);
+        job.setMapperClass(DistrictCountMapper.class);
+        job.setCombinerClass(DistrictCountReducer.class);
+        job.setReducerClass(DistrictCountReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
         for (int i = 0; i < otherArgs.length - 1; ++i) {

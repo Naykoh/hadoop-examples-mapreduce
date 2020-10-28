@@ -15,20 +15,20 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TokenizerMapperTest {
+public class WordCountMapperTest {
     @Mock
     private Mapper.Context context;
-    private TokenizerMapper tokenizerMapper;
+    private WordCountMapper wordCountMapper;
 
     @Before
     public void setup() {
-        this.tokenizerMapper = new TokenizerMapper();
+        this.wordCountMapper = new WordCountMapper();
     }
 
     @Test
     public void testMap() throws IOException, InterruptedException {
         String value = "foo bar tux";
-        this.tokenizerMapper.map(null, new Text(value), this.context);
+        this.wordCountMapper.map(null, new Text(value), this.context);
         verify(this.context, times(3))
                 .write(new Text("tux"), new IntWritable(1));
     }
