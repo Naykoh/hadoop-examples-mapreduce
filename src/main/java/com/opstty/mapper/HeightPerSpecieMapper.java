@@ -9,24 +9,26 @@ import java.io.IOException;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class DistrictCountMapper extends Mapper<Object, Text, Text, IntWritable> {
-    private final static IntWritable nul = new IntWritable(-1);
+public class HeightPerSpecieMapper extends Mapper<Object, Text, Text, IntWritable> {
     private Text line = new Text();
 
     public void map(Object key, Text value, Context context)
             throws IOException, InterruptedException {
         StringTokenizer itr = new StringTokenizer(value.toString(),"\n");
 
-
-
-
         while (itr.hasMoreTokens()) {
             line.set(itr.nextToken());
-            String district = line.toString().split(";")[1];
+            String row = line.toString();
+            String specie = row.split(";")[3];
+
             //skip header row
-            if (!district.equals("ARRONDISSEMENT"))
+            if (!specie.equals("ESPECE"))
             {
-                context.write(new Text(district), nul);
+                String heightString = row.split(";")[6];  //get my height as a String
+                if (!heightString.equals("")){ //check for a NaN Values
+                    IntWritable height = new IntWritable((int)Double.parseDouble(heightString));
+                    context.write(new Text(specie), height);
+                }
             }
         }
     }

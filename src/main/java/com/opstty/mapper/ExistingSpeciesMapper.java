@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class DistrictCountMapper extends Mapper<Object, Text, Text, IntWritable> {
+public class ExistingSpeciesMapper extends Mapper<Object, Text, Text, IntWritable> {
     private final static IntWritable nul = new IntWritable(-1);
     private Text line = new Text();
 
@@ -22,11 +22,11 @@ public class DistrictCountMapper extends Mapper<Object, Text, Text, IntWritable>
 
         while (itr.hasMoreTokens()) {
             line.set(itr.nextToken());
-            String district = line.toString().split(";")[1];
+            String specie = line.toString().split(";")[3];
             //skip header row
-            if (!district.equals("ARRONDISSEMENT"))
+            if (!specie.equals("ESPECE"))
             {
-                context.write(new Text(district), nul);
+                context.write(new Text(specie), nul);
             }
         }
     }
