@@ -24,6 +24,9 @@ public class AppDriver {
             programDriver.addClass("heightperspecie", HeightPerSpecie.class,
                     "A map/reduce program that calculates the height of the tallest tree of each kind");
 
+            programDriver.addClass("treesorted", TreeSorted.class,
+                    "A map/reduce program that sort the trees height from smallest to largest");
+
             exitCode = programDriver.run(argv);
         } catch (Throwable throwable) {
             throwable.printStackTrace();
