@@ -1,5 +1,6 @@
 package com.opstty.mapper;
 
+import com.opstty.utils.IntPairWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class TreeSortedMapper extends Mapper<Object, Text, IntWritable, Text> {
+public class OldestTreeMapper extends Mapper<Object, Text, Text, IntPairWritable>{
     private final static IntWritable one = new IntWritable(1);
     private Text line = new Text();
 
@@ -20,15 +21,16 @@ public class TreeSortedMapper extends Mapper<Object, Text, IntWritable, Text> {
         while (itr.hasMoreTokens()) {
             line.set(itr.nextToken());
             String row = line.toString();
-            String specie = row.split(";")[3];
+            String id = row.split(";")[11]; //get unique ID as String
 
             //skip header row
-            if (!specie.equals("ESPECE"))
+            if (!id.equals("OBJECTID"))
             {
-                String heightString = row.split(";")[6];  //get my height as a String
-                if (!heightString.equals("")){ //check for a NaN Values
-                    IntWritable height = new IntWritable((int)Double.parseDouble(heightString)); // convert String to Int Writable
-                    context.write(height, new Text(specie));
+                String age = row.split(";")[5];  //get age as a String
+                String district = row.split(";")[1];  //get district as a String
+
+                if (!age.equals("")){ //check for a NaN Values
+                    context.write(new Text("tree"), new IntPairWritable((int)Double.parseDouble(district),(int)Double.parseDouble(age)));
                 }
             }
         }
