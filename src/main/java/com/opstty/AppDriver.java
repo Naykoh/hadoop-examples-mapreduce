@@ -30,6 +30,9 @@ public class AppDriver {
             programDriver.addClass("oldesttree", OldestTree.class,
                     "A map/reduce program that displays the district where the oldest tree is");
 
+            programDriver.addClass("mosttrees", MostTrees.class,
+                    "A map/reduce program that displays the district that contains the most trees.");
+
             exitCode = programDriver.run(argv);
         } catch (Throwable throwable) {
             throwable.printStackTrace();

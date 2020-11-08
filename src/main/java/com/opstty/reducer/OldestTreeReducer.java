@@ -24,7 +24,6 @@ public class OldestTreeReducer extends Reducer<Text, IntPairWritable, Text, IntP
             }
         }
 
-        NullWritable nul = NullWritable.get();
         context.write(new Text("District containing oldest tree :"), new IntPairWritable(lowestDistrict,lowestYear));
 
     }
